@@ -1,5 +1,5 @@
 //
-//  DSFadePresentationAnimation.swift
+//  FadePresentationAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 4/2/17.
@@ -8,10 +8,11 @@
 
 import UIKit
 
-class DSFadePresentationAnimation: DSPresentationAnimation {
+class FadePresentationAnimation: PresentationAnimation {
 
     override public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to) as? DSTransitionAnimation else {
+        guard let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+            as? TransitionAnimation else {
             return
         }
         guard let toView = transitionContext.view(forKey: UITransitionContextViewKey.to) else {

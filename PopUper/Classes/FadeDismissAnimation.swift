@@ -1,5 +1,5 @@
 //
-//  DSFadeDismissAnimation.swift
+//  FadeDismissAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 4/2/17.
@@ -8,17 +8,19 @@
 
 import UIKit
 
-class DSFadeDismissAnimation: DSDismissAnimation {
+class FadeDismissAnimation: DismissAnimation {
 
     public override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as? DSTransitionAnimation else {
+        guard let fromViewController = transitionContext.viewController(forKey:
+            UITransitionContextViewControllerKey.from) as? TransitionAnimation else {
             return
         }
         
         let backgroundShowAnimationTimeMultiplier = 0.5
         let delay = transitionDuration(using: transitionContext) - transitionDuration(using: transitionContext) * backgroundShowAnimationTimeMultiplier
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext) * backgroundShowAnimationTimeMultiplier,
+        UIView.animate(withDuration: transitionDuration(using: transitionContext) *
+            backgroundShowAnimationTimeMultiplier,
                        delay: delay,
                        options: .curveEaseOut,
                        animations: {

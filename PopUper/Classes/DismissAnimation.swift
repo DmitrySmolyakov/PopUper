@@ -1,5 +1,5 @@
 //
-//  DSDismissAnimation.swift
+//  DismissAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 3/30/17.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol DSDismissAnimationDelegate: class {
+protocol DismissAnimationDelegate: class {
     func durationForDismissAnimation() -> Double
     func rotationAngleForDismissAnimation() -> CGFloat?
 }
 
-public class DSDismissAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+public class DismissAnimation: NSObject, UIViewControllerAnimatedTransitioning {
 
-    weak var delegate: DSDismissAnimationDelegate?
+    weak var delegate: DismissAnimationDelegate?
     
     var rotationAngle: CGFloat? {
         return self.delegate?.rotationAngleForDismissAnimation()

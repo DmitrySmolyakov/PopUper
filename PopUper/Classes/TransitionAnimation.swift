@@ -1,5 +1,5 @@
 //
-//  DSTransitionAnimation.swift
+//  TransitionAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 3/31/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DSTransitionAnimation {
+protocol TransitionAnimation {
     var backgroundView: UIView { get }
     var contentView: UIView { get }
 }

@@ -1,5 +1,5 @@
 //
-//  DSPresentationAnimation.swift
+//  PresentationAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 3/30/17.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol DSPresentationAnimationDelegate: class {
+protocol PresentationAnimationDelegate: class {
     func durationForPresentationAnimation() -> Double
     func rotationAngleForPresentAnimation() -> CGFloat?
     func contentFinalRotationAngleForPresentAnimation() -> CGFloat?
 }
 
-public class DSPresentationAnimation: NSObject, UIViewControllerAnimatedTransitioning {
+public class PresentationAnimation: NSObject, UIViewControllerAnimatedTransitioning {
     
-    weak var delegate: DSPresentationAnimationDelegate?
+    weak var delegate: PresentationAnimationDelegate?
     
     var rotationAngle: CGFloat? {
         return self.delegate?.rotationAngleForPresentAnimation()

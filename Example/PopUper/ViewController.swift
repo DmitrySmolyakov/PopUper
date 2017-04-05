@@ -22,7 +22,7 @@ class ViewController: UITableViewController {
                          ["Simple slide animation", "Default rotation angle", "Slide animation with custom rotation angle"],
                          ["Added close button with some setup", "Manual setup for close button"]]
     
-    var currentlyShowedAlertController: DSAlertController? = nil
+    var currentlyShowedAlertController: PopUper? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -1,5 +1,5 @@
 //
-//  DSSlideDismissAnimation.swift
+//  SlideDismissAnimation.swift
 //  Pods
 //
 //  Created by Dmitry Smolyakov on 4/1/17.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DSSlideDismissAnimation: DSDismissAnimation {
+class SlideDismissAnimation: DismissAnimation {
 
     let direction: Animation.Direction
     let rotation: Bool
@@ -20,7 +20,8 @@ class DSSlideDismissAnimation: DSDismissAnimation {
     
     public override func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         
-        guard let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from) as? DSTransitionAnimation else {
+        guard let fromViewController = transitionContext.viewController(forKey:
+            UITransitionContextViewControllerKey.from) as? TransitionAnimation else {
             return
         }
         guard let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from) else {
@@ -61,13 +62,17 @@ class DSSlideDismissAnimation: DSDismissAnimation {
         case .bottom:
             return (CGAffineTransform(translationX: 0, y: toView.frame.size.height), CGFloat.pi / 2)
         case .topRight:
-            return (CGAffineTransform(translationX: toView.frame.size.width, y: -toView.frame.size.height), -CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: -toView.frame.size.height),
+                    -CGFloat.pi / 2)
         case .topLeft:
-            return (CGAffineTransform(translationX: -toView.frame.size.width, y: -toView.frame.size.height), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: -toView.frame.size.height),
+                    CGFloat.pi / 2)
         case .bottomRight:
-            return (CGAffineTransform(translationX: toView.frame.size.width, y: toView.frame.size.height), CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: toView.frame.size.width, y: toView.frame.size.height),
+                    CGFloat.pi / 2)
         case .bottomLeft:
-            return (CGAffineTransform(translationX: -toView.frame.size.width, y: toView.frame.size.height), -CGFloat.pi / 2)
+            return (CGAffineTransform(translationX: -toView.frame.size.width, y: toView.frame.size.height),
+                    -CGFloat.pi / 2)
         }
     }
 }
