@@ -1,0 +1,19 @@
+PODS:
+  - PopUper (0.1):
+    - SnapKit
+  - SnapKit (3.2.0)
+
+DEPENDENCIES:
+  - PopUper (from `../`)
+
+EXTERNAL SOURCES:
+  PopUper:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  PopUper: 87debd601301efbc30cec99b5db722986f40a506
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+
+PODFILE CHECKSUM: 02064b14e5fa57e43101be0a4f90bf9c394d4dc2
+
+COCOAPODS: 1.2.0

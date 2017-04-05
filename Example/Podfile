@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'PopUper_Example' do
+  pod 'PopUper', :path => '../'
+
+  target 'PopUper_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
