@@ -1,6 +1,6 @@
 //
 //  ExampleViewController.swift
-//  DSAlertView
+//  PopUper
 //
 //  Created by Dmitry Smolyakov on 4/3/17.
 //  Copyright © 2017 CocoaPods. All rights reserved.

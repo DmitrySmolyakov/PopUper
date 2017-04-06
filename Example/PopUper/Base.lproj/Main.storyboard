@@ -12,7 +12,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--DSAlertView Example-->
+        <!--PopUper Example-->
         <scene sceneID="ear-Ou-K6v">
             <objects>
                 <tableViewController id="r89-bu-Uu1" customClass="ViewController" customModule="PopUper_Example" customModuleProvider="target" sceneMemberID="viewController">
@@ -25,7 +25,7 @@
                             <outlet property="delegate" destination="r89-bu-Uu1" id="r1A-xf-BqX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="DSAlertView Example" id="FvB-b2-xQL"/>
+                    <navigationItem key="navigationItem" title="PopUper Example" id="FvB-b2-xQL"/>
                     <connections>
                         <outlet property="tableView" destination="yGs-h9-dlv" id="w0a-Os-dgC"/>
                     </connections>

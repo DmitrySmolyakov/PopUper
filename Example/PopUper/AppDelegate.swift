@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  DSAlertView
+//  PopUper
 //
 //  Created by vinclai@yandex.ru on 03/30/2017.
 //  Copyright (c) 2017 vinclai@yandex.ru. All rights reserved.
