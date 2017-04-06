@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 open class PopUper: UIViewController, TransitionAnimation {
     
@@ -37,6 +36,7 @@ open class PopUper: UIViewController, TransitionAnimation {
         tempCloseButton.setImage(self.getImageFromBundle(name: "closeButton").withRenderingMode(.alwaysTemplate),
                                  for: .normal)
         tempCloseButton.addTarget(self, action: #selector(self.closeButtonTapped), for: .touchUpInside)
+        tempCloseButton.translatesAutoresizingMaskIntoConstraints = false
         return tempCloseButton
     }()
     
@@ -48,20 +48,21 @@ open class PopUper: UIViewController, TransitionAnimation {
     }()
     
     // Content view size
+    let constraintManager = ConstraintsManager()
     private struct ContentSizeConstraints {
-        var widthMultiplierConstraint: NSLayoutConstraint
-        var widthAbsoluteConstraint: NSLayoutConstraint
-        var heightMultiplierConstraint: NSLayoutConstraint
-        var heightAbsoluteConstraint: NSLayoutConstraint
-        var centerAbsoluteXConstraint: NSLayoutConstraint
-        var centerAbsoluteYConstraint: NSLayoutConstraint
-        var centerMultiplierXConstraint: NSLayoutConstraint
-        var centerMultiplierYConstraint: NSLayoutConstraint
+        var widthMultiplierConstraint: NSLayoutConstraint?
+        var widthAbsoluteConstraint: NSLayoutConstraint?
+        var heightMultiplierConstraint: NSLayoutConstraint?
+        var heightAbsoluteConstraint: NSLayoutConstraint?
+        var centerAbsoluteXConstraint: NSLayoutConstraint?
+        var centerAbsoluteYConstraint: NSLayoutConstraint?
+        var centerMultiplierXConstraint: NSLayoutConstraint?
+        var centerMultiplierYConstraint: NSLayoutConstraint?
         var widthMultiplierStatus: Bool
         var heightMultiplierStatus: Bool
         var centerMultiplierStatus: Bool
     }
-    private var contentSizeConstraints = ContentSizeConstraints(widthMultiplierConstraint: NSLayoutConstraint(), widthAbsoluteConstraint: NSLayoutConstraint(), heightMultiplierConstraint: NSLayoutConstraint(), heightAbsoluteConstraint: NSLayoutConstraint(), centerAbsoluteXConstraint: NSLayoutConstraint(), centerAbsoluteYConstraint: NSLayoutConstraint(), centerMultiplierXConstraint: NSLayoutConstraint(), centerMultiplierYConstraint: NSLayoutConstraint(), widthMultiplierStatus: true, heightMultiplierStatus: true, centerMultiplierStatus: true)
+    private var contentSizeConstraints = ContentSizeConstraints(widthMultiplierConstraint: nil, widthAbsoluteConstraint: nil, heightMultiplierConstraint: nil, heightAbsoluteConstraint: nil, centerAbsoluteXConstraint: nil, centerAbsoluteYConstraint: nil, centerMultiplierXConstraint: nil, centerMultiplierYConstraint: nil, widthMultiplierStatus: true, heightMultiplierStatus: true, centerMultiplierStatus: true)
     open var widthMultiplier: CGFloat = 0.7 {
         didSet {
             contentSizeConstraints.widthMultiplierStatus = true
@@ -216,70 +217,27 @@ open class PopUper: UIViewController, TransitionAnimation {
         super.viewDidLoad()
         
         self.view.addSubview(backgroundView)
-        NSLayoutConstraint(item: backgroundView,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: self.view,
-                           attribute: .centerX,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: backgroundView,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: self.view,
-                           attribute: .centerY,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: backgroundView,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.view,
-                           attribute: .width,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: backgroundView,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: self.view,
-                           attribute: .height,
-                           multiplier: 1.0, constant: 0).isActive = true
+        ConstraintsManager.addFillContraintsFor(fromView: backgroundView, toView: self.view)
 
         self.view.addSubview(contentView)
+        contentSizeConstraints.widthMultiplierConstraint = NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: widthMultiplier, constant: 0)
+        contentSizeConstraints.widthAbsoluteConstraint = NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: width)
+        contentSizeConstraints.heightMultiplierConstraint = NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: heightMultiplier, constant: 0)
+        contentSizeConstraints.heightAbsoluteConstraint = NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: height)
+        contentSizeConstraints.centerMultiplierXConstraint = NSLayoutConstraint(item: contentView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: centerMultiplierX, constant: 0)
+        contentSizeConstraints.centerAbsoluteXConstraint = NSLayoutConstraint(item: contentView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: centerOffsetX)
+        contentSizeConstraints.centerMultiplierYConstraint = NSLayoutConstraint(item: contentView, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: centerMultiplierY, constant: 0)
+        contentSizeConstraints.centerAbsoluteYConstraint = NSLayoutConstraint(item: contentView, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: centerOffsetY)
         self.setupConstraintsForContentView()
         
         self.addChildViewController(showedViewController)
         self.contentView.addSubview(showedViewController.view)
         showedViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: showedViewController.view,
-                           attribute: .centerX,
-                           relatedBy: .equal,
-                           toItem: self.contentView,
-                           attribute: .centerX,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: showedViewController.view,
-                           attribute: .centerY,
-                           relatedBy: .equal,
-                           toItem: self.contentView,
-                           attribute: .centerY,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: showedViewController.view,
-                           attribute: .width,
-                           relatedBy: .equal,
-                           toItem: self.contentView,
-                           attribute: .width,
-                           multiplier: 1.0, constant: 0).isActive = true
-        NSLayoutConstraint(item: showedViewController.view,
-                           attribute: .height,
-                           relatedBy: .equal,
-                           toItem: self.contentView,
-                           attribute: .height,
-                           multiplier: 1.0, constant: 0).isActive = true
+        ConstraintsManager.addFillContraintsFor(fromView: showedViewController.view, toView: self.contentView)
         self.showedViewController.didMove(toParentViewController: self)
         
         self.contentView.addSubview(closeButton)
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: 30).isActive = true
-        NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: 30).isActive = true
-        NSLayoutConstraint(item: closeButton, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: closeButton, attribute: .right, relatedBy: .equal, toItem: contentView, attribute: .right, multiplier: 1, constant: -20).isActive = true
+        ConstraintsManager.addCloseButtonConstraints(closeButton: closeButton, toItem: self.contentView)
     }
     
     // MARK: Actions
@@ -300,27 +258,30 @@ open class PopUper: UIViewController, TransitionAnimation {
     }
 
     private func setupConstraintsForContentView() {
-
-        if contentSizeConstraints.widthMultiplierStatus {
-            NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: self.view, attribute: .width, multiplier: widthMultiplier, constant: 0).isActive = true
-        } else {
-            NSLayoutConstraint(item: contentView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1, constant: width).isActive = true
-        }
-        if contentSizeConstraints.heightMultiplierStatus {
-            NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: heightMultiplier, constant: 0).isActive = true
-        } else {
-            NSLayoutConstraint(item: contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: height).isActive = true
-        }
-        if contentSizeConstraints.centerMultiplierStatus {
-            NSLayoutConstraint(item: contentView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: centerMultiplierX, constant: 0).isActive = true
-        } else {
-            NSLayoutConstraint(item: contentView, attribute: .centerX, relatedBy: .equal, toItem: self.view, attribute: .centerX, multiplier: 1, constant: centerOffsetX).isActive = true
-        }
-        if contentSizeConstraints.centerMultiplierStatus {
-            NSLayoutConstraint(item: contentView, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: centerMultiplierY, constant: 0).isActive = true
-        } else {
-            NSLayoutConstraint(item: contentView, attribute: .centerY, relatedBy: .equal, toItem: self.view, attribute: .centerY, multiplier: 1, constant: centerOffsetY).isActive = true
-        }
+        
+        contentSizeConstraints.widthMultiplierConstraint = contentSizeConstraints.widthMultiplierConstraint?.setMultiplier(multiplier: widthMultiplier)
+        contentSizeConstraints.widthMultiplierConstraint?.isActive = contentSizeConstraints.widthMultiplierStatus
+        
+        contentSizeConstraints.widthAbsoluteConstraint?.constant = width
+        contentSizeConstraints.widthAbsoluteConstraint?.isActive = !contentSizeConstraints.widthMultiplierStatus
+        
+        contentSizeConstraints.heightMultiplierConstraint = contentSizeConstraints.heightMultiplierConstraint?.setMultiplier(multiplier: heightMultiplier)
+        contentSizeConstraints.heightMultiplierConstraint?.isActive = contentSizeConstraints.heightMultiplierStatus
+        
+        contentSizeConstraints.heightAbsoluteConstraint?.constant = height
+        contentSizeConstraints.heightAbsoluteConstraint?.isActive = !contentSizeConstraints.heightMultiplierStatus
+        
+        contentSizeConstraints.centerMultiplierXConstraint = contentSizeConstraints.centerMultiplierXConstraint?.setMultiplier(multiplier: centerMultiplierX)
+        contentSizeConstraints.centerMultiplierXConstraint?.isActive = contentSizeConstraints.centerMultiplierStatus
+        
+        contentSizeConstraints.centerMultiplierYConstraint = contentSizeConstraints.centerMultiplierYConstraint?.setMultiplier(multiplier: centerMultiplierY)
+        contentSizeConstraints.centerMultiplierYConstraint?.isActive = contentSizeConstraints.centerMultiplierStatus
+        
+        contentSizeConstraints.centerAbsoluteXConstraint?.constant = centerOffsetX
+        contentSizeConstraints.centerAbsoluteXConstraint?.isActive = !contentSizeConstraints.centerMultiplierStatus
+        
+        contentSizeConstraints.centerAbsoluteYConstraint?.constant = centerOffsetY
+        contentSizeConstraints.centerAbsoluteYConstraint?.isActive = !contentSizeConstraints.centerMultiplierStatus
     }
 }
 
